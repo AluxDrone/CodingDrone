@@ -58,8 +58,6 @@ class DataType(Enum):
     Configuration               = 0x16      # 설정
     Echo                        = 0x17      # 반향(정상적으로 송수신 되는 데이터 길이 확인용, 받은 데이터를 그대로 반환, RF로 송수신 가능한 데이터 길이를 확인할 목적으로 추가)
 
-    Battle                      = 0x1F      # 전투
-
     # Light
     LightManual                 = 0x20      # LED 수동 제어
     LightMode                   = 0x21      # LED 모드
@@ -117,22 +115,6 @@ class DataType(Enum):
     # Information Assembled
     InformationAssembledForController   = 0xA0      # 자주 갱신되는 데이터 모음
     InformationAssembledForEntry        = 0xA1      # 자주 갱신되는 데이터 모음
-    InformationAssembledForByBlocks     = 0xA2      # 자주 갱신되는 데이터 모음
-
-    # Navigation
-    NavigationTarget            = 0xD0      # 네비게이션 목표점
-    NavigationLocation          = 0xD1      # 네비게이션 드론 위치
-    NavigationMonitor           = 0xD2
-    NavigationHeading           = 0xD3
-    NavigationCounter           = 0xD4
-    NavigationSatellite         = 0xD5      # 위성 정보
-    NavigationLocationAdjust    = 0xD6      # 드론 위치 조정
-
-    NavigationTargetEcef        = 0xD8      # 드론 타겟 위치(ECEF)
-    NavigationLocationEcef      = 0xD9      # 드론 현재 위치(ECEF)
-
-    GpsRtkNavigationState               = 0xDA      # RTK RAW 데이터 전송
-    GpsRtkExtendedRawMeasurementData    = 0xDB      # RTK RAW 데이터 전송
 
     EndOfType                           = 0xDC
 
@@ -167,18 +149,6 @@ class CommandType(Enum):
 
     # 관리자
     ClearCounter            = 0xA0      # 카운터 클리어(관리자 권한을 획득했을 경우에만 동작)
-
-    # Navigation
-    NavigationTargetClear   = 0xE0      # 네비게이션 목표점 초기화
-    NavigationStart         = 0xE1      # 네비게이션 시작(처음부터)
-    NavigationPause         = 0xE2      # 네비게이션 일시 정지
-    NavigationRestart       = 0xE3      # 네비게이션 다시 시작(일시 정지 후 다시 시작할 때 사용)
-    NavigationStop          = 0xE4      # 네비게이션 중단
-    NavigationNext          = 0xE5      # 네비게이션 목표점을 다음으로 변경
-    NavigationReturnToHome  = 0xE6      # 시작 위치로 귀환
-    
-    GpsRtkBase              = 0xEA
-    GpsRtkRover             = 0xEB
 
     EndOfType               = 0xEC
 
@@ -1961,42 +1931,6 @@ class DisplayDrawStringAlign(ISerializable):
         return data
 
 
-
-class DisplayImage(ISerializable):
-
-    def __init__(self):
-        self.x          = 0
-        self.y          = 0
-        self.width      = 0
-        self.height     = 0
-        self.image      = bytearray()
-
-
-    @classmethod
-    def getSize(cls):
-        return 8
-
-
-    def toArray(self):
-        dataArray = bytearray()
-        dataArray.extend(pack('<hhhh', self.x, self.y, self.width, self.height))
-        dataArray.extend(self.image)
-        return dataArray
-
-
-    @classmethod
-    def parse(cls, dataArray):
-        data = DisplayImage()
-        
-        if len(dataArray) <= cls.getSize():
-            return None
-
-        data.x, data.y, data.width, data.height = unpack('<hhhh', dataArray)
-        data.image = dataArray[cls.getSize():(len(dataArray) - cls.getSize())]
-        
-        return data
-
-
 # Display End
 
 
@@ -2082,7 +2016,7 @@ class VibratorMode(Enum):
 
     Stop                = 0     # 정지
 
-    Instantally         = 1     # 즉시 적용
+    Instantly           = 1     # 즉시 적용
     Continually         = 2     # 예약
 
     EndOfType           = 3

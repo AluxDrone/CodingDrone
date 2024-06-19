@@ -235,9 +235,6 @@ class FlightEvent(Enum):
 
     Return              = 0x18
 
-    Shot                = 0x90
-    UnderAttack         = 0x91
-
     ResetHeading        = 0xA0
 
     EndOfType           = 0xA1
