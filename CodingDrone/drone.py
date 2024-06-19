@@ -1780,7 +1780,7 @@ class Drone:
         
         data = Vibrator()
 
-        data.mode       = VibratorMode.Instantally
+        data.mode       = VibratorMode.Instantly
         data.on         = on
         data.off        = off
         data.total      = total
