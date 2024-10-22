@@ -6,7 +6,7 @@ from setuptools import setup, find_packages
 
 setup(
     name = "CodingDrone",
-    version = "1.0.3",
+    version = "1.0.4",
     description = "Library for CodingDrone.",
     author = "v",
     author_email = "devdrone@aluxonline.com",

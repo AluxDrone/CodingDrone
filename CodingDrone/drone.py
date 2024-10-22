@@ -1172,10 +1172,9 @@ class Drone:
         return self.transfer(header, data)
 
 
-
     def sendLightModeColor(self, lightMode, interval, r, g, b):
         
-        if ((not isinstance(lightMode, int)) or
+        if  (((not isinstance(lightMode, LightModeDrone)) and (not isinstance(lightMode, LightModeController))) or
             (not isinstance(interval, int)) or
             (not isinstance(r, int)) or
             (not isinstance(g, int)) or
